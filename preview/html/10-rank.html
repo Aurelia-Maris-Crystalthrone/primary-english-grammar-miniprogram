@@ -1,0 +1,640 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #E9E4DA; display: flex; justify-content: center; padding: 0; }
+.phone {
+  width: 390px; height: 844px; background: #FDFBF7; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.phone__nav {
+  height: 88px; padding-top: 44px; display: flex; align-items: center; justify-content: center;
+  background: #FDFBF7; border-bottom: 1px solid rgba(0,0,0,0.02); position: relative; flex: none;
+}
+.phone__nav-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.phone__nav-back { position: absolute; left: 14px; top: 48px; font-size: 15px; color: #333; }
+.phone__scroll { flex: 1; overflow-y: auto; }
+.phone__tabbar {
+  height: 74px; border-top: 1px solid #F0EBE1; background: #fff; display: flex; flex: none;
+  padding-bottom: 12px;
+}
+.phone__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.phone__tab img { width: 24px; height: 24px; }
+.phone__tab span { font-size: 10px; color: #9A958B; }
+.phone__tab--active span { color: #8A6A46; }
+/* 小学英语语法 · 小程序基础样式
+   配色取自网页版：米白纸感底 + 墨黑正文 + 琥珀金强调。 */
+.page-body {
+  background: #FDFBF7;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 12px 16px 32px;
+}
+
+/* ---------- 排版 ---------- */
+.eyebrow {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #A2967F;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.25px;
+}
+
+.title-sm {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #222222;
+}
+
+.muted {
+  color: #6F6B63;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.tiny {
+  font-size: 11px;
+}
+
+.gold {
+  color: #8A6A46;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--soft {
+  background: #F7F3EA;
+  border-color: #EDE4D3;
+}
+
+.card--flat {
+  box-shadow: 0 1px 0 rgba(34, 34, 34, 0.02);
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 2px 10px;
+}
+
+.section-head__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.section-head__note {
+  font-size: 11px;
+  color: #9A8F7C;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 499.5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn--primary {
+  background: #2E2A26;
+  color: #FFFFFF;
+}
+
+.btn--primary.btn--hover,
+.btn--primary:active {
+  background: #4A3E2C;
+}
+
+.btn--gold {
+  background: #8A6A46;
+  color: #FFFFFF;
+}
+
+.btn--ghost {
+  background: #FFFFFF;
+  color: #2E2A26;
+  border: 0.5px solid #DCD2C0;
+}
+
+.btn--ghost:active {
+  background: #F5F3EE;
+}
+
+.btn--sm {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  background: #E7E2D7;
+  color: #A39C8F;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---------- 标签 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 499.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F6B63;
+  background: #F5F3EE;
+}
+
+.pill--gold {
+  color: #7A5C33;
+  background: #F4E9D6;
+}
+
+.pill--green {
+  color: #37634A;
+  background: #E9F1E7;
+}
+
+.pill--red {
+  color: #9E403C;
+  background: #FBEAE8;
+}
+
+.pill--outline {
+  background: transparent;
+  border: 0.5px solid #E0D7C6;
+}
+
+/* ---------- 进度条 ---------- */
+.progress {
+  height: 6px;
+  border-radius: 499.5px;
+  background: #EFE9DD;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 499.5px;
+  background: #B9975B;
+}
+
+/* ---------- 通用 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stack-8 > view + view {
+  margin-top: 4px;
+}
+
+.divider {
+  height: 0.5px;
+  background: #F0EBE1;
+  margin: 12px 0;
+}
+
+.link {
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9A8F7C;
+}
+
+.empty__title {
+  font-size: 15px;
+  color: #4A443C;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.safe-bottom {
+  height: 0px;
+}
+.rank {
+  padding-top: 10px;
+}
+
+.rk-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 2px 13px;
+}
+
+.rk-head__title {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.rk-head__sub {
+  font-size: 11px;
+  color: #9A8F7C;
+  line-height: 1.65;
+}
+
+.seg {
+  display: flex;
+  padding: 3px;
+  border-radius: 499.5px;
+  background: #F1ECE1;
+  margin-bottom: 13px;
+}
+
+.seg__item {
+  flex: 1;
+  height: 32px;
+  border-radius: 499.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  color: #7A7368;
+  font-weight: 600;
+}
+
+.seg__item--on {
+  background: #FFFFFF;
+  color: #2E2A26;
+  box-shadow: 0 1px 4px rgba(46, 42, 38, 0.08);
+}
+
+.rk-me {
+  display: flex;
+  align-items: center;
+  padding: 15px 16px;
+  border-radius: 14px;
+  background: #2E2A26;
+  margin-bottom: 13px;
+}
+
+.rk-me__left,
+.rk-me__right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rk-me__right {
+  align-items: flex-end;
+}
+
+.rk-me__label {
+  font-size: 10px;
+  color: #B9B0A2;
+  letter-spacing: 1px;
+}
+
+.rk-me__rank {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.rk-me__no {
+  font-size: 26px;
+  line-height: 1;
+  color: #FBF6EC;
+  font-weight: 700;
+}
+
+.rk-me__unit {
+  font-size: 11px;
+  color: #B9B0A2;
+}
+
+.rk-me__divider {
+  width: 0.5px;
+  height: 31px;
+  background: rgba(251, 246, 236, 0.18);
+}
+
+.rk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.rk-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 12px;
+  border-radius: 11px;
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+}
+
+.rk-row--me {
+  border-color: #D9C49A;
+  background: #FFFDF8;
+}
+
+.rk-row__no {
+  width: 26px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #A99C88;
+  font-weight: 700;
+}
+
+.rk-row__medal {
+  font-size: 16px;
+}
+
+.rk-row__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex: none;
+  background: #F4E9D6;
+}
+
+.rk-row__avatar--emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+}
+
+.rk-row__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rk-row__name-line {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rk-row__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2E2A26;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-row__tag {
+  font-size: 9px;
+  color: #8A6A46;
+  background: #F4E9D6;
+  border-radius: 3px;
+  padding: 1px 4px;
+  flex: none;
+}
+
+.rk-row__meta {
+  font-size: 10px;
+  color: #A99C88;
+}
+
+.rk-row__score {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  flex: none;
+}
+
+.rk-row__points {
+  font-size: 17px;
+  font-weight: 700;
+  color: #8A6A46;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.rk-row__points-unit {
+  font-size: 9px;
+  color: #B3AEA4;
+}
+
+.rk-add {
+  margin-top: 14px;
+}
+
+.rk-tip {
+  display: block;
+  margin-top: 9px;
+  font-size: 10px;
+  color: #B3AEA4;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.cloud {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cloud__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2E2A26;
+}
+
+.cloud__sub {
+  font-size: 11.5px;
+  color: #7A7368;
+  line-height: 1.65;
+}
+
+.cloud__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.cloud__step-no {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #F4E9D6;
+  color: #7A5C33;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  margin-top: 2px;
+}
+
+.cloud__step-text {
+  font-size: 11px;
+  color: #5F594F;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.cloud__foot {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #B3AEA4;
+}
+
+.cloud-state {
+  padding: 45px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.cloud-state__btn {
+  display: inline-flex;
+}
+
+.cloud-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 17px;
+}
+
+.cloud-footer__link {
+  font-size: 11.5px;
+  color: #8A6A46;
+}
+</style></head><body><div class="phone"><div class="phone__nav"><div class="phone__nav-back">‹</div><div class="phone__nav-title">排行榜</div></div><div class="phone__scroll"><div class="page-body"><div class="page rank">
+  <div class="rk-head">
+    <span class="eyebrow">LEADERBOARD</span>
+    <span class="rk-head__title serif">积分排行榜</span>
+    <span class="rk-head__sub">积分只来自练习行为：通关一关 +10，修正一道错题 +3，完成一轮 +5。</span>
+  </div>
+
+  <div class="seg">
+    <div class="seg__item seg__item--on" data-tab="local">我的成绩</div>
+    <div class="seg__item " data-tab="cloud">班级榜</div>
+  </div>
+
+  
+    <div class="rk-me">
+      <div class="rk-me__left">
+        <span class="rk-me__label">我的积分</span>
+        <div class="rk-me__rank">
+          <span class="rk-me__no serif">80</span>
+          <span class="rk-me__unit">分</span>
+        </div>
+      </div>
+      <div class="rk-me__divider"></div>
+      <div class="rk-me__right">
+        <span class="rk-me__label">连续学习</span>
+        <div class="rk-me__rank">
+          <span class="rk-me__no serif">1</span>
+          <span class="rk-me__unit">天</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rk-list">
+      <div class="rk-row rk-row--me">
+        
+        <div class="rk-row__avatar rk-row__avatar--emoji">🦊</div>
+        <div class="rk-row__body">
+          <div class="rk-row__name-line">
+            <span class="rk-row__name">小语</span>
+            <span class="rk-row__tag">本机</span>
+          </div>
+          <span class="rk-row__meta">通关 4 / 37 关 · 作答 30 道 · 待巩固 9 道</span>
+        </div>
+        <div class="rk-row__score">
+          <span class="rk-row__points">80</span>
+          <span class="rk-row__points-unit">分</span>
+        </div>
+      </div>
+    </div>
+
+    <span class="rk-tip">一台手机一位学员，积分只来自这台手机的练习记录。想和同学排名，切到「班级榜」。</span>
+  
+
+  
+</div>
+</div></div></div></body></html>

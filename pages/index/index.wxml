@@ -1,0 +1,224 @@
+<view class="page home">
+  <view class="brand-row">
+    <view class="brand">
+      <view class="brand__mark">Aa</view>
+      <view class="brand__text">
+        <text class="brand__name">伴随英语</text>
+        <text class="brand__sub">{{stage.stageLabel || '小学语法'}}</text>
+      </view>
+    </view>
+    <text class="brand__date">{{dateLabel}}</text>
+  </view>
+
+  <!-- 阶段选择：一级；选中「大学」时展开二级，选中「考研」再展开英语一/二 -->
+  <view class="stage-picker" wx:if="{{stage}}">
+    <scroll-view class="stage-picker__row" scroll-x enable-flex show-scrollbar="{{false}}">
+      <view
+        wx:for="{{stage.stages}}"
+        wx:key="id"
+        class="stage-picker__item {{item.active ? 'stage-picker__item--active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onSelectStage"
+      >
+        <text class="stage-picker__name">{{item.name}}</text>
+        <text wx:if="{{!item.available}}" class="stage-picker__badge">待建</text>
+      </view>
+    </scroll-view>
+
+    <view class="stage-picker__subs" wx:if="{{stage.showSub}}">
+      <view
+        wx:for="{{stage.subStages}}"
+        wx:key="id"
+        class="stage-picker__sub {{item.active ? 'stage-picker__sub--active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onSelectSub"
+      >
+        <text class="stage-picker__sub-name">{{item.name}}</text>
+        <text class="stage-picker__sub-desc">{{item.sub}}</text>
+      </view>
+    </view>
+
+    <view class="stage-picker__children" wx:if="{{stage.showChild}}">
+      <text class="stage-picker__children-label">考试方向</text>
+      <view
+        wx:for="{{stage.children}}"
+        wx:key="id"
+        class="stage-picker__child {{item.active ? 'stage-picker__child--active' : ''}}"
+        data-id="{{item.id}}"
+        bindtap="onSelectChild"
+      >{{item.name}}</view>
+    </view>
+
+    <text class="stage-picker__note">{{stage.stageDesc}}</text>
+  </view>
+
+  <!-- 现有题库、语法地图、六册关卡全部挂在「小学」下 -->
+  <block wx:if="{{stageAvailable}}">
+    <view class="stage-owner">
+      <text class="stage-owner__tag">小学</text>
+      <text class="stage-owner__text">六册课程 · {{stage.contentSummary}}</text>
+    </view>
+
+    <view class="today card">
+      <text class="eyebrow">TODAY'S STUDY DESK</text>
+      <view class="today__head">
+        <text class="today__title serif">今天想练什么？</text>
+        <text class="today__percent">{{percent}}%</text>
+      </view>
+      <text class="today__sub">已通关 {{clearedCount}} / {{totalLevels}} 关 · 待巩固 {{mistakeCount}} 道错题</text>
+      <view class="progress today__bar">
+        <view class="progress__bar" style="width:{{percent}}"></view>
+      </view>
+      <view class="today__stats">
+        <view class="today__stat">
+          <text class="today__num">{{today.count}}</text>
+          <text class="today__label">今日答题</text>
+        </view>
+        <view class="today__stat">
+          <text class="today__num">{{today.accuracy}}<text class="today__unit">%</text></text>
+          <text class="today__label">今日正确</text>
+        </view>
+        <view class="today__stat">
+          <text class="today__num">{{today.streak}}</text>
+          <text class="today__label">连续天数</text>
+        </view>
+        <view class="today__stat">
+          <text class="today__num">{{points}}</text>
+          <text class="today__label">成长积分</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="mission" wx:if="{{mission}}" bindtap="onStartMission">
+      <text class="mission__eyebrow">CURRENT MISSION</text>
+      <text class="mission__level">{{mission.stageName}} · {{mission.phaseName}} · 第 {{mission.number}} 关</text>
+      <text class="mission__name">{{mission.name}}</text>
+      <text class="mission__reason">{{mission.reason}}</text>
+      <view class="mission__foot">
+        <text class="mission__meta">题库 {{mission.count}} 道 · 每轮 10 道</text>
+        <view class="mission__btn">{{mission.label}} →</view>
+      </view>
+    </view>
+
+    <!-- 学习台按语法地图分类：数据全部来自 catalog.js + questions.js 实测 -->
+    <view class="section-head">
+      <text class="section-head__title">语法地图 · 按分类练</text>
+      <text class="section-head__note">{{categories.length}} 大分类 · 点卡片直接抽题</text>
+    </view>
+
+    <view class="cat-grid">
+      <view
+        class="cat"
+        wx:for="{{categories}}"
+        wx:key="id"
+        data-id="{{item.id}}"
+        bindtap="onOpenCategory"
+      >
+        <view class="cat__head">
+          <text class="cat__icon">{{item.icon}}</text>
+          <text class="cat__title">{{item.title}}</text>
+        </view>
+        <text class="cat__meta">{{item.nodeCount}} 个知识点 · {{item.questionCount}} 道题</text>
+        <view class="progress cat__bar">
+          <view class="progress__bar" style="width:{{item.percent}}"></view>
+        </view>
+        <text class="cat__progress">已练 {{item.practiced}} / {{item.questionCount}} 道</text>
+      </view>
+    </view>
+
+    <view class="section-head">
+      <text class="section-head__title">学习闭环</text>
+      <text class="section-head__note">过一关 → 刷题 → 错题重做</text>
+    </view>
+
+    <view class="entries">
+      <view class="entry" bindtap="onGoMap">
+        <view class="entry__icon">册</view>
+        <view class="entry__body">
+          <text class="entry__title">六册课程路线</text>
+          <text class="entry__desc">{{totalLevels}} 个知识点关卡，一关一关往后解锁</text>
+        </view>
+        <text class="entry__arrow">→</text>
+      </view>
+      <view class="entry" bindtap="onGoMistakes">
+        <view class="entry__icon">错</view>
+        <view class="entry__body">
+          <text class="entry__title">错题本</text>
+          <text class="entry__desc">{{mistakeCount}} 道待巩固 · 按错误次数分难度</text>
+        </view>
+        <text class="entry__arrow">→</text>
+      </view>
+      <view class="entry" bindtap="onGoGrowth">
+        <view class="entry__icon">长</view>
+        <view class="entry__body">
+          <text class="entry__title">成长记录</text>
+          <text class="entry__desc">积分、徽章与六册进度</text>
+        </view>
+        <text class="entry__arrow">→</text>
+      </view>
+      <view class="entry" bindtap="onGoRank">
+        <view class="entry__icon">榜</view>
+        <view class="entry__body">
+          <text class="entry__title">排行榜</text>
+          <text class="entry__desc">全站用户总榜 · 我的排名 · 练习后自动更新</text>
+        </view>
+        <text class="entry__arrow">→</text>
+      </view>
+    </view>
+
+    <text class="foot">共 {{stats.stages}} 册 · {{stats.levels}} 关 · 题库 {{stats.questions}} 道</text>
+  </block>
+
+  <!-- 其它学段暂时还没有题库 -->
+  <view wx:else class="card stage-empty">
+    <text class="stage-empty__title">{{stage.stageLabel}} · 内容建设中</text>
+    <text class="stage-empty__desc">这个学段的题库还在整理中，上线后会自动出现在这里。</text>
+    <button class="btn btn--ghost btn--sm stage-empty__btn" bindtap="onBackToPrimary">回到小学内容</button>
+  </view>
+
+  <view class="promo card">
+    <view class="promo__nav">
+      <text class="promo__nav-brand">一贯制自学编程教学平台</text>
+      <scroll-view class="promo__nav-menu" scroll-x>
+        <view class="promo__nav-row">
+          <text class="promo__nav-item">课程介绍</text>
+          <text class="promo__nav-item">网站教程</text>
+          <text class="promo__nav-item">{{'Q&A'}}</text>
+          <text class="promo__nav-item">学员作品</text>
+          <text class="promo__nav-item">学员心得</text>
+          <text class="promo__nav-item">设置</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="promo__shot">
+      <image class="promo__shot-img" src="/images/site-hero.png" mode="widthFix" />
+    </view>
+
+    <view class="promo__body">
+      <text class="promo__brand">zerocode.xin · 自学编程教学平台</text>
+
+      <view class="promo__panel">
+        <view class="promo__tags">
+          <text class="promo__tag">一贯制</text>
+          <text class="promo__tag">零基础</text>
+          <text class="promo__tag">项目制</text>
+          <text class="promo__tag">全免费</text>
+          <text class="promo__tag">纯线上</text>
+        </view>
+      </view>
+
+      <view class="promo__grid">
+        <view class="promo__cell">软件开发</view>
+        <view class="promo__cell">高性能计算</view>
+        <view class="promo__cell">人工智能应用</view>
+        <view class="promo__cell">AI 产品开发</view>
+        <view class="promo__badge">课程</view>
+      </view>
+
+      <text class="promo__note">AI 产品开发方向：游戏 · 视频 · 软件等</text>
+
+      <view class="promo__btn" bindtap="onCopyPromo">复制链接</view>
+    </view>
+  </view>
+</view>

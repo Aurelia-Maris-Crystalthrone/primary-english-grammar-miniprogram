@@ -1,0 +1,85 @@
+<view class="page me">
+  <include src="../../templates/stage-gate.wxml" />
+
+  <block wx:if="{{stageAvailable}}">
+  <view class="me-hero">
+    <button class="me-avatar" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+      <image wx:if="{{user.avatar}}" class="me-avatar__img" src="{{user.avatar}}" mode="aspectFill" />
+      <text wx:else class="me-avatar__emoji">{{user.emoji}}</text>
+      <text class="me-avatar__badge">换</text>
+    </button>
+    <view class="me-hero__body">
+      <input
+        class="me-name"
+        type="nickname"
+        value="{{user.name}}"
+        placeholder="点这里填昵称"
+        placeholder-class="me-name__ph"
+        bindblur="onNameBlur"
+        bindconfirm="onNameBlur"
+      />
+      <text class="me-hero__sub">一台手机一位学员 · 数据只存在这台手机</text>
+    </view>
+  </view>
+
+  <view class="me-phone">
+    <view class="me-phone__icon">微</view>
+    <view class="me-phone__body">
+      <view class="me-phone__row">
+        <text class="me-phone__title">账号</text>
+        <text class="me-phone__value {{loggedIn ? 'me-phone__value--on' : ''}}">{{accountText}}</text>
+      </view>
+      <text class="me-phone__desc">{{accountDesc}}</text>
+    </view>
+    <view wx:if="{{cloudEnabled && !loggedIn}}" class="me-phone__unbind" bindtap="onRetryLogin">重试</view>
+  </view>
+
+  <view class="card me-stats">
+    <view class="me-stat">
+      <text class="me-stat__num">{{card.points}}</text>
+      <text class="me-stat__label">积分</text>
+    </view>
+    <view class="me-stat">
+      <text class="me-stat__num">{{card.cleared}}</text>
+      <text class="me-stat__label">通关 / {{totalLevels}}</text>
+    </view>
+    <view class="me-stat">
+      <text class="me-stat__num">{{card.answered}}</text>
+      <text class="me-stat__label">累计作答</text>
+    </view>
+    <view class="me-stat">
+      <text class="me-stat__num">{{card.mistakes}}</text>
+      <text class="me-stat__label">待巩固</text>
+    </view>
+  </view>
+
+  <view class="entries">
+    <view class="entry" bindtap="onGoRank">
+      <view class="entry__icon">榜</view>
+      <view class="entry__body">
+        <text class="entry__title">排行榜</text>
+        <text class="entry__desc">积分榜 · 考试掌握题数榜 · 班级榜</text>
+      </view>
+      <text class="entry__arrow">→</text>
+    </view>
+    <view class="entry" bindtap="onGoGrowth">
+      <view class="entry__icon">长</view>
+      <view class="entry__body">
+        <text class="entry__title">成长记录</text>
+        <text class="entry__desc">积分、徽章与六册进度</text>
+      </view>
+      <text class="entry__arrow">→</text>
+    </view>
+    <view class="entry" bindtap="onAboutData">
+      <view class="entry__icon">问</view>
+      <view class="entry__body">
+        <text class="entry__title">数据存在哪</text>
+        <text class="entry__desc">本机保存与云端同步的范围</text>
+      </view>
+      <text class="entry__arrow">→</text>
+    </view>
+  </view>
+
+  <text class="me-foot">题库随包下发，不联网也能练 · 开通云开发后自动用微信登录同步</text>
+  </block>
+</view>

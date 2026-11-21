@@ -1,0 +1,48 @@
+<view class="page hd" wx:if="{{total}}">
+  <view class="hd-head">
+    <text class="eyebrow">{{bookName}} · HANDOUT</text>
+    <text class="hd-head__title serif">{{title}}</text>
+    <text class="hd-head__sub">共 {{total}} 页 · 点图片放大，双指可再缩放</text>
+  </view>
+
+  <view class="hd-pages">
+    <image
+      wx:for="{{pages}}"
+      wx:key="*this"
+      class="hd-page"
+      src="{{item}}"
+      mode="widthFix"
+      data-src="{{item}}"
+      data-index="{{index}}"
+      bindtap="onPreview"
+      binderror="onImageError"
+      lazy-load="{{true}}"
+    />
+  </view>
+
+  <text class="hd-foot">讲义来自课程原稿，和这一关的知识点一一对应</text>
+
+  <view class="hd-zoom" wx:if="{{zoom}}" catchtouchmove="noop" catchtap="onCloseZoom">
+    <movable-area class="hd-zoom__area">
+      <movable-view
+        class="hd-zoom__view"
+        direction="all"
+        scale
+        scale-min="1"
+        scale-max="4"
+        out-of-bounds="{{true}}"
+      >
+        <image class="hd-zoom__img" src="{{zoomSrc}}" mode="aspectFit" />
+      </movable-view>
+    </movable-area>
+    <view class="hd-zoom__tip">双指缩放 · 点空白处关闭</view>
+  </view>
+</view>
+
+<view class="page" wx:else>
+  <view class="empty">
+    <text class="empty__title">{{title || '这一关还没有讲义'}}</text>
+    <text class="muted">先去刷题，讲义补齐后会出现在这里。</text>
+    <button class="btn btn--primary btn--sm empty__btn" bindtap="onBackToLevel">返回关卡</button>
+  </view>
+</view>

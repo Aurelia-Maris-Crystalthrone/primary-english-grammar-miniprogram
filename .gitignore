@@ -1,0 +1,13 @@
+# 云函数依赖（体积大，上传时由云端安装）
+**/node_modules/
+
+# 开发者工具私有配置（含本机路径/票据，不入库）
+project.private.config.json
+
+# 编辑器 / 系统缓存
+.codeartsdoer/
+.DS_Store
+*.log
+
+# 本地备份压缩包
+*.zip

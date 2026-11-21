@@ -1,0 +1,82 @@
+<view class="page level" wx:if="{{level}}">
+  <view class="level__top">
+    <text class="eyebrow">LEVEL {{level.numberLabel}}</text>
+    <text class="level__crumb">{{level.stageName}} · {{level.phaseName}} · 第 {{level.numberLabel}} 关</text>
+    <view class="level__head">
+      <text class="level__title serif">{{level.name}}</text>
+      <view class="pill {{status.cls}}">{{status.label}}</view>
+    </view>
+  </view>
+
+  <view class="card rule" wx:if="{{nodes.length}}">
+    <text class="eyebrow">一句话规则</text>
+    <view class="rule__item" wx:for="{{nodes}}" wx:key="id">
+      <text class="rule__name">{{item.name}}</text>
+      <text class="rule__text">{{item.shortRule}}</text>
+    </view>
+  </view>
+
+  <view class="card lesson" wx:if="{{lesson}}">
+    <text class="eyebrow">先看一眼 · 讲解可选</text>
+    <text class="lesson__rule">{{lesson.rule}}</text>
+    <view class="lesson__scenes">
+      <view class="scene" wx:for="{{lesson.scenes}}" wx:key="en">
+        <text class="scene__en">{{item.en}}</text>
+        <text class="scene__zh">{{item.zh}}</text>
+      </view>
+    </view>
+    <view class="lesson__contrast">
+      <text class="lesson__contrast-label">易错对比</text>
+      <text class="lesson__contrast-text">{{lesson.contrast}}</text>
+    </view>
+  </view>
+
+  <view class="handout" wx:if="{{handout}}" bindtap="onOpenHandout">
+    <view class="handout__icon">讲</view>
+    <view class="handout__body">
+      <text class="handout__title">本关讲义</text>
+      <text class="handout__desc">{{handout.pages}} 页 · 点开可放大看</text>
+    </view>
+    <text class="handout__arrow">→</text>
+  </view>
+
+  <view class="card setup">
+    <text class="eyebrow">START PRACTICE</text>
+    <view class="setup__row">
+      <text class="setup__title">本关题库</text>
+      <text class="setup__value">{{poolCount}} 道</text>
+    </view>
+
+    <view class="round">
+      <view class="round__left">
+        <text class="round__num">{{roundCount}}</text>
+        <text class="round__unit">道</text>
+      </view>
+      <view class="round__right">
+        <text class="round__title">每轮固定 {{roundSize}} 道</text>
+        <text class="round__desc" wx:if="{{roundCount >= roundSize}}">从本关 {{poolCount}} 道题里随机抽，不重复出同一批</text>
+        <text class="round__desc" wx:else>本关只有 {{poolCount}} 道可练，按实际题量开始</text>
+      </view>
+    </view>
+
+    <button class="btn btn--primary btn--block setup__btn" bindtap="onStart" disabled="{{!poolCount}}">
+      {{startLabel}}
+    </button>
+    <text class="setup__tip">答错立刻看解析 · 首答正确率 80% 记为通过</text>
+  </view>
+
+  <view class="level__nav">
+    <view class="level__nav-btn {{prev ? '' : 'level__nav-btn--off'}}" bindtap="onOpenPrev">
+      <text class="level__nav-dir">← 上一关</text>
+      <text class="level__nav-name">{{prev ? prev.name : '已经是第一关'}}</text>
+    </view>
+    <view class="level__nav-btn level__nav-btn--right {{next ? (next.locked ? 'level__nav-btn--locked' : '') : 'level__nav-btn--off'}}" bindtap="onOpenNext">
+      <text class="level__nav-dir">{{next && next.locked ? '下一关 · 未解锁' : '下一关 →'}}</text>
+      <text class="level__nav-name">{{next ? next.name : '已经是最后一关'}}</text>
+    </view>
+  </view>
+
+  <view class="level__back" bindtap="onBackMap">
+    <text>回到六册地图</text>
+  </view>
+</view>

@@ -1,0 +1,695 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #E9E4DA; display: flex; justify-content: center; padding: 0; }
+.phone {
+  width: 390px; height: 844px; background: #FDFBF7; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.phone__nav {
+  height: 88px; padding-top: 44px; display: flex; align-items: center; justify-content: center;
+  background: #FDFBF7; border-bottom: 1px solid rgba(0,0,0,0.02); position: relative; flex: none;
+}
+.phone__nav-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.phone__nav-back { position: absolute; left: 14px; top: 48px; font-size: 15px; color: #333; }
+.phone__scroll { flex: 1; overflow-y: auto; }
+.phone__tabbar {
+  height: 74px; border-top: 1px solid #F0EBE1; background: #fff; display: flex; flex: none;
+  padding-bottom: 12px;
+}
+.phone__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.phone__tab img { width: 24px; height: 24px; }
+.phone__tab span { font-size: 10px; color: #9A958B; }
+.phone__tab--active span { color: #8A6A46; }
+/* 小学英语语法 · 小程序基础样式
+   配色取自网页版：米白纸感底 + 墨黑正文 + 琥珀金强调。 */
+.page-body {
+  background: #FDFBF7;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 12px 16px 32px;
+}
+
+/* ---------- 排版 ---------- */
+.eyebrow {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #A2967F;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.25px;
+}
+
+.title-sm {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #222222;
+}
+
+.muted {
+  color: #6F6B63;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.tiny {
+  font-size: 11px;
+}
+
+.gold {
+  color: #8A6A46;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--soft {
+  background: #F7F3EA;
+  border-color: #EDE4D3;
+}
+
+.card--flat {
+  box-shadow: 0 1px 0 rgba(34, 34, 34, 0.02);
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 2px 10px;
+}
+
+.section-head__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.section-head__note {
+  font-size: 11px;
+  color: #9A8F7C;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 499.5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn--primary {
+  background: #2E2A26;
+  color: #FFFFFF;
+}
+
+.btn--primary.btn--hover,
+.btn--primary:active {
+  background: #4A3E2C;
+}
+
+.btn--gold {
+  background: #8A6A46;
+  color: #FFFFFF;
+}
+
+.btn--ghost {
+  background: #FFFFFF;
+  color: #2E2A26;
+  border: 0.5px solid #DCD2C0;
+}
+
+.btn--ghost:active {
+  background: #F5F3EE;
+}
+
+.btn--sm {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  background: #E7E2D7;
+  color: #A39C8F;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---------- 标签 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 499.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F6B63;
+  background: #F5F3EE;
+}
+
+.pill--gold {
+  color: #7A5C33;
+  background: #F4E9D6;
+}
+
+.pill--green {
+  color: #37634A;
+  background: #E9F1E7;
+}
+
+.pill--red {
+  color: #9E403C;
+  background: #FBEAE8;
+}
+
+.pill--outline {
+  background: transparent;
+  border: 0.5px solid #E0D7C6;
+}
+
+/* ---------- 进度条 ---------- */
+.progress {
+  height: 6px;
+  border-radius: 499.5px;
+  background: #EFE9DD;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 499.5px;
+  background: #B9975B;
+}
+
+/* ---------- 通用 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stack-8 > view + view {
+  margin-top: 4px;
+}
+
+.divider {
+  height: 0.5px;
+  background: #F0EBE1;
+  margin: 12px 0;
+}
+
+.link {
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9A8F7C;
+}
+
+.empty__title {
+  font-size: 15px;
+  color: #4A443C;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.safe-bottom {
+  height: 0px;
+}
+.growth {
+  padding-top: 10px;
+}
+
+.gw-head {
+  padding: 4px 2px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.gw-head__title {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.gw-head__sub {
+  font-size: 11px;
+  color: #9A8F7C;
+  line-height: 1.65;
+}
+
+.score {
+  border-radius: 16px;
+  padding: 19px 17px 15px;
+  background: linear-gradient(150deg, #2E2A26 0%, #463A29 100%);
+}
+
+.score__label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #C8B291;
+}
+
+.score__value {
+  display: flex;
+  align-items: baseline;
+  margin-top: 3px;
+}
+
+.score__num {
+  font-size: 48px;
+  line-height: 1;
+  color: #FBF6EC;
+  font-weight: 700;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.score__unit {
+  font-size: 13px;
+  color: #C8B291;
+  margin-left: 4px;
+}
+
+.score__streak {
+  display: block;
+  margin-top: 5px;
+  font-size: 10.5px;
+  color: #A99C88;
+}
+
+.score__grid {
+  margin-top: 14px;
+  padding-top: 13px;
+  border-top: 0.5px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.score__cell {
+  width: 50%;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.score__cell-num {
+  font-size: 17px;
+  font-weight: 700;
+  color: #F5EEDF;
+}
+
+.score__cell-label {
+  font-size: 10px;
+  color: #A99C88;
+}
+
+.tip {
+  margin-top: 10px;
+  padding: 13px 14px;
+  border-radius: 11px;
+  background: #F6F1E6;
+  border: 0.5px solid #EDE3D0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tip__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tip__label {
+  font-size: 10px;
+  color: #A2967F;
+  letter-spacing: 1px;
+}
+
+.tip__text {
+  font-size: 12.5px;
+  color: #5F4E33;
+  line-height: 1.6;
+}
+
+.tip__arrow {
+  color: #B9975B;
+  font-size: 14px;
+}
+
+.badges {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 13px;
+  border-radius: 11px;
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+}
+
+.badge__mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: #F6EDDC;
+  color: #B9975B;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.badge__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+}
+
+.badge__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2E2A26;
+}
+
+.badge__desc {
+  font-size: 10.5px;
+  color: #9A8F7C;
+}
+
+.badges-empty {
+  padding: 15px;
+}
+
+.stage-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.stage-row {
+  padding: 12px 13px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+}
+
+.stage-row__top {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.stage-row__book {
+  font-size: 10px;
+  color: #A2967F;
+}
+
+.stage-row__name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #2E2A26;
+  flex: 1;
+}
+
+.stage-row__count {
+  font-size: 10.5px;
+  color: #9A8F7C;
+}
+
+.stage-row__bar {
+  margin-top: 7px;
+  height: 4px;
+  border-radius: 499.5px;
+  background: #F1EDE3;
+  overflow: hidden;
+}
+
+.stage-row__bar-in {
+  height: 100%;
+  background: #B9975B;
+  border-radius: 499.5px;
+}
+
+.gw-actions {
+  margin-top: 18px;
+  border-top: 0.5px solid #F0EBE1;
+  padding-top: 4px;
+}
+
+.gw-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 2px;
+  border-bottom: 0.5px solid #F5F1E8;
+}
+
+.gw-action__text {
+  font-size: 13px;
+  color: #2E2A26;
+}
+
+.gw-action__meta {
+  font-size: 10.5px;
+  color: #B3AEA4;
+}
+
+.gw-action--danger .gw-action__text {
+  color: #A8483F;
+}
+
+.gw-foot {
+  display: block;
+  margin-top: 17px;
+  text-align: center;
+  font-size: 10px;
+  color: #C0B9AC;
+}
+</style></head><body><div class="phone"><div class="phone__nav"><div class="phone__nav-title">成长</div></div><div class="phone__scroll"><div class="page-body"><div class="page growth">
+  <div class="gw-head">
+    <span class="eyebrow">GROWTH RECORD</span>
+    <span class="gw-head__title serif">成长记录</span>
+    <span class="gw-head__sub">积分只记录练习行为：通关一关 +10，修正一道错题 +3，完成一轮 +5。</span>
+  </div>
+
+  <div class="score">
+    <div class="score__main">
+      <span class="score__label">当前积分</span>
+      <div class="score__value">
+        <span class="score__num">80</span>
+        <span class="score__unit">分</span>
+      </div>
+      <span class="score__streak">连续学习 1 天 · 累计作答 30 道</span>
+    </div>
+    <div class="score__grid">
+      <div class="score__cell">
+        <span class="score__cell-num">4</span>
+        <span class="score__cell-label">已通关 / 37</span>
+      </div>
+      <div class="score__cell">
+        <span class="score__cell-num">0</span>
+        <span class="score__cell-label">修正的错题</span>
+      </div>
+      <div class="score__cell">
+        <span class="score__cell-num">8</span>
+        <span class="score__cell-label">完成轮次</span>
+      </div>
+      <div class="score__cell">
+        <span class="score__cell-num">9</span>
+        <span class="score__cell-label">待巩固错题</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip">
+    <div class="tip__body">
+      <span class="tip__label">下一步建议</span>
+      <span class="tip__text">错题本里还有 9 道题，先重做一遍，比刷新题更划算。</span>
+    </div>
+    <span class="tip__arrow">→</span>
+  </div>
+
+  <div class="section-head">
+    <span class="section-head__title">徽章</span>
+    <span class="section-head__note">2 枚</span>
+  </div>
+
+  <div class="badges">
+    <div class="badge">
+      <div class="badge__mark">✦</div>
+      <div class="badge__body">
+        <span class="badge__name">认真练习</span>
+        <span class="badge__desc">完成第一轮练习</span>
+      </div>
+    </div><div class="badge">
+      <div class="badge__mark">✦</div>
+      <div class="badge__body">
+        <span class="badge__name">地图探险家</span>
+        <span class="badge__desc">通关 3 个知识点</span>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="section-head">
+    <span class="section-head__title">六册进度</span>
+    <span class="section-head__note">4 / 37 关</span>
+  </div>
+
+  <div class="stage-list">
+    <div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 1 册</span>
+        <span class="stage-row__name">初级上</span>
+        <span class="stage-row__count">4 / 6</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:67%"></div>
+      </div>
+    </div><div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 2 册</span>
+        <span class="stage-row__name">初级下</span>
+        <span class="stage-row__count">0 / 8</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:0%"></div>
+      </div>
+    </div><div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 3 册</span>
+        <span class="stage-row__name">中级上</span>
+        <span class="stage-row__count">0 / 11</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:0%"></div>
+      </div>
+    </div><div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 4 册</span>
+        <span class="stage-row__name">中级下</span>
+        <span class="stage-row__count">0 / 2</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:0%"></div>
+      </div>
+    </div><div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 5 册</span>
+        <span class="stage-row__name">高级上</span>
+        <span class="stage-row__count">0 / 5</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:0%"></div>
+      </div>
+    </div><div class="stage-row">
+      <div class="stage-row__top">
+        <span class="stage-row__book">第 6 册</span>
+        <span class="stage-row__name">高级下</span>
+        <span class="stage-row__count">0 / 5</span>
+      </div>
+      <div class="stage-row__bar">
+        <div class="stage-row__bar-in" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gw-actions">
+    <div class="gw-action">
+      <span class="gw-action__text">积分排行榜</span>
+      <span class="gw-action__meta">本机榜 · 班级榜</span>
+    </div>
+    <div class="gw-action">
+      <span class="gw-action__text">关于题库</span>
+      <span class="gw-action__meta">4145 道题</span>
+    </div>
+    <div class="gw-action gw-action--danger">
+      <span class="gw-action__text">清空本机学习记录</span>
+      <span class="gw-action__meta">只影响这台手机</span>
+    </div>
+  </div>
+
+  <span class="gw-foot">数据保存在这台手机上 · 开通云开发后可加入班级榜</span>
+</div>
+</div></div><div class="phone__tabbar"><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-home.png" /><span>学习台</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-map.png" /><span>语法地图</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-mistakes.png" /><span>错题本</span></div><div class="phone__tab phone__tab--active"><img src="file://E:/primary-english-grammar-miniprogram/images/tab-growth.png" /><span>成长</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-me.png" /><span>我的</span></div></div></div></body></html>

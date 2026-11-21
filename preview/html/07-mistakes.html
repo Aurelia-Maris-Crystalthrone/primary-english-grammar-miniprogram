@@ -1,0 +1,698 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #E9E4DA; display: flex; justify-content: center; padding: 0; }
+.phone {
+  width: 390px; height: 844px; background: #FDFBF7; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.phone__nav {
+  height: 88px; padding-top: 44px; display: flex; align-items: center; justify-content: center;
+  background: #FDFBF7; border-bottom: 1px solid rgba(0,0,0,0.02); position: relative; flex: none;
+}
+.phone__nav-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.phone__nav-back { position: absolute; left: 14px; top: 48px; font-size: 15px; color: #333; }
+.phone__scroll { flex: 1; overflow-y: auto; }
+.phone__tabbar {
+  height: 74px; border-top: 1px solid #F0EBE1; background: #fff; display: flex; flex: none;
+  padding-bottom: 12px;
+}
+.phone__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.phone__tab img { width: 24px; height: 24px; }
+.phone__tab span { font-size: 10px; color: #9A958B; }
+.phone__tab--active span { color: #8A6A46; }
+/* 小学英语语法 · 小程序基础样式
+   配色取自网页版：米白纸感底 + 墨黑正文 + 琥珀金强调。 */
+.page-body {
+  background: #FDFBF7;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 12px 16px 32px;
+}
+
+/* ---------- 排版 ---------- */
+.eyebrow {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #A2967F;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.25px;
+}
+
+.title-sm {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #222222;
+}
+
+.muted {
+  color: #6F6B63;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.tiny {
+  font-size: 11px;
+}
+
+.gold {
+  color: #8A6A46;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--soft {
+  background: #F7F3EA;
+  border-color: #EDE4D3;
+}
+
+.card--flat {
+  box-shadow: 0 1px 0 rgba(34, 34, 34, 0.02);
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 2px 10px;
+}
+
+.section-head__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.section-head__note {
+  font-size: 11px;
+  color: #9A8F7C;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 499.5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn--primary {
+  background: #2E2A26;
+  color: #FFFFFF;
+}
+
+.btn--primary.btn--hover,
+.btn--primary:active {
+  background: #4A3E2C;
+}
+
+.btn--gold {
+  background: #8A6A46;
+  color: #FFFFFF;
+}
+
+.btn--ghost {
+  background: #FFFFFF;
+  color: #2E2A26;
+  border: 0.5px solid #DCD2C0;
+}
+
+.btn--ghost:active {
+  background: #F5F3EE;
+}
+
+.btn--sm {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  background: #E7E2D7;
+  color: #A39C8F;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---------- 标签 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 499.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F6B63;
+  background: #F5F3EE;
+}
+
+.pill--gold {
+  color: #7A5C33;
+  background: #F4E9D6;
+}
+
+.pill--green {
+  color: #37634A;
+  background: #E9F1E7;
+}
+
+.pill--red {
+  color: #9E403C;
+  background: #FBEAE8;
+}
+
+.pill--outline {
+  background: transparent;
+  border: 0.5px solid #E0D7C6;
+}
+
+/* ---------- 进度条 ---------- */
+.progress {
+  height: 6px;
+  border-radius: 499.5px;
+  background: #EFE9DD;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 499.5px;
+  background: #B9975B;
+}
+
+/* ---------- 通用 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stack-8 > view + view {
+  margin-top: 4px;
+}
+
+.divider {
+  height: 0.5px;
+  background: #F0EBE1;
+  margin: 12px 0;
+}
+
+.link {
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9A8F7C;
+}
+
+.empty__title {
+  font-size: 15px;
+  color: #4A443C;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.safe-bottom {
+  height: 0px;
+}
+.mistakes {
+  padding-top: 10px;
+}
+
+.mk-head {
+  padding: 4px 2px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mk-head__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.mk-head__title {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.mk-head__count {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8A6A46;
+}
+
+.mk-head__sub {
+  font-size: 11px;
+  color: #9A8F7C;
+  line-height: 1.65;
+}
+
+.mk-actions {
+  margin-bottom: 4px;
+}
+
+.mk-group {
+  margin-top: 18px;
+}
+
+.mk-group__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px 8px;
+}
+
+.mk-group__count {
+  font-size: 11px;
+  color: #8C8478;
+}
+
+.mk-group__hint {
+  font-size: 10px;
+  color: #B3AEA4;
+}
+
+.mk-card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 12px;
+  padding: 13px 13px 10px;
+  margin-bottom: 8px;
+}
+
+.mk-card__prompt {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #2E2A26;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+}
+
+.mk-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.mk-card__times {
+  font-size: 10px;
+  color: #9E403C;
+  background: #FBEAE8;
+  padding: 2px 7px;
+  border-radius: 499.5px;
+}
+
+.mk-card__level {
+  font-size: 10px;
+  color: #A99C88;
+}
+
+.mk-card__answer {
+  margin-top: 7px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #F8F5EE;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.mk-card__answer-label {
+  font-size: 10px;
+  color: #A2967F;
+  flex: none;
+}
+
+.mk-card__answer-value {
+  font-size: 12.5px;
+  color: #4A443C;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.mk-card__node {
+  display: block;
+  margin-top: 5px;
+  font-size: 10px;
+  color: #8A6A46;
+}
+
+.mk-card__actions {
+  margin-top: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.mk-card__actions-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.mk-card__btn {
+  height: 31px;
+  padding: 0 13px;
+  border-radius: 499.5px;
+  background: #2E2A26;
+  color: #FBF6EC;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.mk-card__btn:active {
+  background: #4A3E2C;
+}
+
+.mk-card__btn--soft {
+  background: #F4E9D6;
+  color: #7A5C33;
+}
+
+.mk-card__btn--soft:active {
+  background: #EBDCC1;
+}
+
+.mk-card__remove {
+  font-size: 11px;
+  color: #A99C88;
+  padding: 6px 4px;
+}
+
+.empty {
+  margin-top: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty__mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #F1EEE4;
+  color: #8A6A46;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.empty__btn {
+  margin-top: 10px;
+  display: inline-flex;
+}
+</style></head><body><div class="phone"><div class="phone__nav"><div class="phone__nav-title">错题本</div></div><div class="phone__scroll"><div class="page-body"><div class="page mistakes">
+  <div class="mk-head">
+    <span class="eyebrow">WRONG BOOK</span>
+    <div class="mk-head__row">
+      <span class="mk-head__title serif">错题本</span>
+      <span class="mk-head__count">9 道</span>
+    </div>
+    <span class="mk-head__sub">做错的题自动收录，按错误次数分成困难 / 中等 / 简单；做对一次就移出。做不对就先练同一个语法点的同类题。</span>
+  </div>
+
+  
+    <div class="mk-actions">
+      <button class="btn btn--primary btn--block">全部重做（9 道）</button>
+    </div>
+
+    <div class="mk-group">
+      <div class="mk-group__head">
+        <div class="row">
+          <span class="pill pill--red">困难</span>
+          <span class="mk-group__count">1 道</span>
+        </div>
+        <span class="mk-group__hint">错过 3 次以上，优先攻克</span>
+      </div>
+
+      <div class="mk-card">
+        <span class="mk-card__prompt">My sister ___ (like) reading books very much.</span>
+        <span class="mk-card__node">like / love / enjoy 的常见搭配</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 3 次</span>
+          <span class="mk-card__level">like 用法</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">were</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-04-001">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-04-001" data-node="VERB.LIKE_ENJOY" data-level="sweet-junior-upper-04">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-04-001">移出</div>
+        </div>
+      </div>
+    </div><div class="mk-group">
+      <div class="mk-group__head">
+        <div class="row">
+          <span class="pill pill--gold">中等</span>
+          <span class="mk-group__count">3 道</span>
+        </div>
+        <span class="mk-group__hint">错过 2 次，还要再练</span>
+      </div>
+
+      <div class="mk-card">
+        <span class="mk-card__prompt">You ___ (have) a lovely dog.</span>
+        <span class="mk-card__node">have / has</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 2 次</span>
+          <span class="mk-card__level">have/ has</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">was</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-02-009">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-02-009" data-node="VERB.HAVE_HAS" data-level="sweet-junior-upper-02">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-02-009">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">There ___ (be) two birds in the tree.</span>
+        <span class="mk-card__node">there is / there are</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 2 次</span>
+          <span class="mk-card__level">there be 句型</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">is</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B2-01-007">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B2-01-007" data-node="THERE_BE" data-level="sweet-junior-lower-01">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B2-01-007">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">He ___ (like) apples very much.</span>
+        <span class="mk-card__node">第三人称单数</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 2 次</span>
+          <span class="mk-card__level">动词三单</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">was</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B2-02-003">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B2-02-003" data-node="VERB.PRESENT.THREE_SINGULAR" data-level="sweet-junior-lower-02">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B2-02-003">移出</div>
+        </div>
+      </div>
+    </div><div class="mk-group">
+      <div class="mk-group__head">
+        <div class="row">
+          <span class="pill pill--green">简单</span>
+          <span class="mk-group__count">5 道</span>
+        </div>
+        <span class="mk-group__hint">只错过 1 次，巩固一下就好</span>
+      </div>
+
+      <div class="mk-card">
+        <span class="mk-card__prompt">___ (be) that your coat, Mr Green? No, it ___ (be) not.</span>
+        <span class="mk-card__node">am / is / are</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 1 次</span>
+          <span class="mk-card__level">be 动词三姐妹</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">is</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-01-011">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-01-011" data-node="BE.PRESENT" data-level="sweet-junior-upper-01">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-01-011">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">Your trousers ___ (be) too long for me.</span>
+        <span class="mk-card__node">am / is / are</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 1 次</span>
+          <span class="mk-card__level">be 动词三姐妹</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">is</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-01-012">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-01-012" data-node="BE.PRESENT" data-level="sweet-junior-upper-01">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-01-012">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">Everyone in our class ___ (have) a dictionary. We ___ (use) them every day.</span>
+        <span class="mk-card__node">have / has</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 1 次</span>
+          <span class="mk-card__level">have/ has</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">are / have</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-02-067">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-02-067" data-node="VERB.HAVE_HAS" data-level="sweet-junior-upper-02">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-02-067">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">The rabbit can ___ (jump) high.</span>
+        <span class="mk-card__node">can / could 的基础表达</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 1 次</span>
+          <span class="mk-card__level">can 用法</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">were</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B1-05-005">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B1-05-005" data-node="MODAL.CAN_COULD" data-level="sweet-junior-upper-05">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B1-05-005">移出</div>
+        </div>
+      </div><div class="mk-card">
+        <span class="mk-card__prompt">There ___ (be) some apples on the table.</span>
+        <span class="mk-card__node">there is / there are</span>
+        <div class="mk-card__meta">
+          <span class="mk-card__times">错 1 次</span>
+          <span class="mk-card__level">there be 句型</span>
+        </div>
+        <div class="mk-card__answer">
+          <span class="mk-card__answer-label">最近作答</span>
+          <span class="mk-card__answer-value">is</span>
+        </div>
+        <div class="mk-card__actions">
+          <div class="mk-card__actions-left">
+            <div class="mk-card__btn" data-id="XSC-B2-01-008">重做这道</div>
+            <div class="mk-card__btn mk-card__btn--soft" data-id="XSC-B2-01-008" data-node="THERE_BE" data-level="sweet-junior-lower-01">练 5 道同类题</div>
+          </div>
+          <div class="mk-card__remove" data-id="XSC-B2-01-008">移出</div>
+        </div>
+      </div>
+    </div>
+  
+
+  
+</div>
+</div></div><div class="phone__tabbar"><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-home.png" /><span>学习台</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-map.png" /><span>语法地图</span></div><div class="phone__tab phone__tab--active"><img src="file://E:/primary-english-grammar-miniprogram/images/tab-mistakes.png" /><span>错题本</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-growth.png" /><span>成长</span></div><div class="phone__tab "><img src="file://E:/primary-english-grammar-miniprogram/images/tab-me.png" /><span>我的</span></div></div></div></body></html>

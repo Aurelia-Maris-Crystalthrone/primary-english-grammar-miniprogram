@@ -1,0 +1,105 @@
+<view class="page quiz">
+  <view class="empty" wx:if="{{empty}}">
+    <text class="empty__title">{{title}}</text>
+    <text class="muted">这一轮没有可练的题，换个关卡试试。</text>
+    <button class="btn btn--primary btn--sm empty__btn" bindtap="onEmptyBack">回到地图</button>
+  </view>
+
+  <block wx:elif="{{!finished}}">
+    <view class="quiz-head">
+      <view class="quiz-head__top">
+        <text class="quiz-head__title">{{title}}</text>
+        <text class="quiz-head__count">{{index + 1}} / {{total}}</text>
+      </view>
+      <text class="quiz-head__sub">{{subtitle}}</text>
+      <view class="progress quiz-head__bar">
+        <view class="progress__bar" style="width:{{progressPercent}}%"></view>
+      </view>
+    </view>
+
+    <view class="card qa" wx:if="{{question}}">
+      <view class="qa__meta">
+        <text class="pill {{question.difficultyClass}}">{{question.difficultyLabel}}</text>
+        <text class="pill pill--outline">{{question.sourceLabel}}</text>
+      </view>
+
+      <view class="qa__prompt">
+        <block wx:for="{{question.promptParts}}" wx:key="k">
+          <text wx:if="{{item.blank}}" class="qa__blank">{{item.text}}</text>
+          <text wx:else>{{item.text}}</text>
+        </block>
+      </view>
+      <text class="qa__hint" wx:if="{{question.multiBlank}}">这道题不止一个空，选项按顺序用 “/” 分开。</text>
+
+      <view class="options">
+        <view
+          wx:for="{{question.options}}"
+          wx:key="key"
+          class="option {{selected === item.key ? 'option--selected' : ''}} {{answered && item.key === question.correctKey ? 'option--correct' : ''}} {{answered && selected === item.key && item.key !== question.correctKey ? 'option--wrong' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onSelect"
+        >
+          <text class="option__key">{{item.key}}</text>
+          <text class="option__text">{{item.text}}</text>
+        </view>
+      </view>
+
+      <button wx:if="{{!answered}}" class="btn btn--primary btn--block qa__submit" bindtap="onSubmit" disabled="{{!selected}}">
+        提交答案
+      </button>
+    </view>
+
+    <view class="feedback feedback--{{isCorrect ? 'ok' : 'bad'}}" wx:if="{{answered}}">
+      <view class="feedback__head">
+        <text class="feedback__title">{{isCorrect ? '答对啦' : '差一点，看看解析'}}</text>
+        <text class="feedback__badge">{{isCorrect ? '首答正确' : '已记入错题本'}}</text>
+      </view>
+      <view class="feedback__answer" wx:if="{{!isCorrect}}">
+        <text class="feedback__label">正确答案</text>
+        <text class="feedback__value">{{correctText}}</text>
+      </view>
+      <text class="feedback__explain" wx:if="{{explanation}}">{{explanation}}</text>
+      <button class="btn btn--primary btn--block feedback__btn" bindtap="onNext">
+        {{isLast ? '看本轮结果' : '下一题'}}
+      </button>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="result">
+      <text class="eyebrow">ROUND RESULT</text>
+      <view class="result__score">
+        <text class="result__percent">{{summary.percent}}</text>
+        <text class="result__unit">%</text>
+      </view>
+      <view class="result__pill">
+        <text class="pill {{summary.toneClass}}">{{summary.statusLabel}}</text>
+      </view>
+      <text class="result__headline serif">{{summary.headline}}</text>
+      <text class="result__message">{{summary.message}}</text>
+
+      <view class="result__stats">
+        <view class="result__stat">
+          <text class="result__num">{{summary.total}}</text>
+          <text class="result__label">本轮题量</text>
+        </view>
+        <view class="result__stat">
+          <text class="result__num">{{summary.correct}}</text>
+          <text class="result__label">一次做对</text>
+        </view>
+        <view class="result__stat">
+          <text class="result__num">{{summary.wrong}}</text>
+          <text class="result__label">答错题数</text>
+        </view>
+        <view class="result__stat">
+          <text class="result__num">80<text class="result__unit-sm">%</text></text>
+          <text class="result__label">通过线</text>
+        </view>
+      </view>
+
+      <button class="btn btn--primary btn--block result__btn" bindtap="onRestart">{{summary.primaryLabel}}</button>
+      <button class="btn btn--ghost btn--block result__btn" bindtap="onSecondary">{{summary.secondaryLabel}}</button>
+      <text class="result__tip">通过只表示这一轮首答正确率达标，不等于长期掌握；错题本会一直留着直到你重做对。</text>
+    </view>
+  </block>
+</view>

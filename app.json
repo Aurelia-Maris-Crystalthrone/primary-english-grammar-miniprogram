@@ -1,0 +1,92 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/map/map",
+    "pages/mistakes/mistakes",
+    "pages/growth/growth",
+    "pages/profile/profile",
+    "pages/level/level",
+    "pages/quiz/quiz",
+    "pages/rank/rank"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FDFBF7",
+    "navigationBarTitleText": "伴随英语",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FDFBF7"
+  },
+  "tabBar": {
+    "color": "#9A958B",
+    "selectedColor": "#8A6A46",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学习台",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/rank/rank",
+        "text": "排行榜",
+        "iconPath": "images/tab-rank.png",
+        "selectedIconPath": "images/tab-rank-active.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "语法地图",
+        "iconPath": "images/tab-map.png",
+        "selectedIconPath": "images/tab-map-active.png"
+      },
+      {
+        "pagePath": "pages/mistakes/mistakes",
+        "text": "错题本",
+        "iconPath": "images/tab-mistakes.png",
+        "selectedIconPath": "images/tab-mistakes-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-me.png",
+        "selectedIconPath": "images/tab-me-active.png"
+      }
+    ]
+  },
+  "subPackages": [
+    {
+      "root": "handouts/b1",
+      "name": "handout-b1",
+      "pages": ["viewer/viewer"]
+    },
+    {
+      "root": "handouts/b2",
+      "name": "handout-b2",
+      "pages": ["viewer/viewer"]
+    },
+    {
+      "root": "handouts/b3",
+      "name": "handout-b3",
+      "pages": ["viewer/viewer"]
+    },
+    {
+      "root": "handouts/b4",
+      "name": "handout-b4",
+      "pages": ["viewer/viewer"]
+    },
+    {
+      "root": "handouts/b5",
+      "name": "handout-b5",
+      "pages": ["viewer/viewer"]
+    },
+    {
+      "root": "handouts/b6",
+      "name": "handout-b6",
+      "pages": ["viewer/viewer"]
+    }
+  ],
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

@@ -1,0 +1,97 @@
+<view class="page rank">
+  <view class="rk-head">
+    <text class="eyebrow">GLOBAL LEADERBOARD</text>
+    <text class="rk-head__title serif">排行榜</text>
+    <text class="rk-head__sub">全站用户总榜 · 按最高分排序 · 共 {{total}} 人上榜</text>
+  </view>
+
+  <view class="rk-me">
+    <view class="rk-me__left">
+      <text class="rk-me__label">我的排名</text>
+      <view class="rk-me__rank">
+        <block wx:if="{{myRank}}">
+          <text class="rk-me__unit">第</text>
+          <text class="rk-me__no serif">{{myRank}}</text>
+          <text class="rk-me__unit">名</text>
+        </block>
+        <text wx:else class="rk-me__empty">暂未上榜</text>
+      </view>
+    </view>
+    <view class="rk-me__divider"></view>
+    <view class="rk-me__right">
+      <text class="rk-me__label">我的积分</text>
+      <view class="rk-me__rank">
+        <text class="rk-me__no serif">{{myPoints}}</text>
+        <text class="rk-me__unit">分</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="rk-meta">
+    <text class="rk-meta__time">更新时间 {{updatedAt || '—'}}</text>
+    <text class="rk-meta__hint">练习结算后自动更新</text>
+  </view>
+
+  <view class="card rk-state" wx:if="{{state === 'off'}}">
+    <text class="rk-state__title">线上排行榜未开通</text>
+    <text class="rk-state__desc">全站榜需要云开发：在 utils/config.js 配置环境 ID，创建 grammar_scores 集合，并部署 getLeaderboard、uploadScore 两个云函数。当前本机成长积分 {{me.points}} 分只保存在这台手机，不计入线上榜单。</text>
+    <button class="btn btn--ghost btn--sm rk-state__btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="card rk-state" wx:elif="{{state === 'error'}}">
+    <text class="rk-state__title">榜单加载失败</text>
+    <text class="rk-state__desc">{{errorText}}</text>
+    <button class="btn btn--ghost btn--sm rk-state__btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="card rk-state" wx:elif="{{state === 'empty'}}">
+    <text class="rk-state__title">榜单还没有数据</text>
+    <text class="rk-state__desc">还没有人上榜。完成任意一轮练习后，成长积分会自动同步到全站榜单；也可以点重试刷新。</text>
+    <button class="btn btn--ghost btn--sm rk-state__btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view class="card rk-state" wx:elif="{{state === 'loading' && !rows.length}}">
+    <text class="rk-state__title">正在加载全站榜单…</text>
+  </view>
+
+  <block wx:else>
+    <view class="rk-list">
+      <view class="rk-row {{item.rank <= 3 ? 'rk-row--top' : ''}} {{item.me ? 'rk-row--me' : ''}}" wx:for="{{rows}}" wx:key="id">
+        <view class="rk-row__no">
+          <text wx:if="{{item.medal}}" class="rk-row__medal">{{item.medal}}</text>
+          <text wx:else class="serif">{{item.rank}}</text>
+        </view>
+        <image wx:if="{{item.avatar}}" class="rk-row__avatar" src="{{item.avatar}}" mode="aspectFill" />
+        <view wx:else class="rk-row__avatar rk-row__avatar--emoji">🙂</view>
+        <view class="rk-row__body">
+          <view class="rk-row__name-line">
+            <text class="rk-row__name">{{item.name}}</text>
+            <text class="rk-row__tag" wx:if="{{item.me}}">我</text>
+          </view>
+          <text class="rk-row__meta">第 {{item.rank}} 名 · 全站总榜</text>
+        </view>
+        <view class="rk-row__score">
+          <text class="rk-row__points">{{item.totalScore}}</text>
+          <text class="rk-row__points-unit">分</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="rk-more" wx:if="{{state === 'ready'}}">
+      <text wx:if="{{loadingMore}}">正在加载更多…</text>
+      <text wx:elif="{{hasMore}}">上拉加载更多</text>
+      <text wx:else>已经到底了 · 共 {{total}} 人</text>
+    </view>
+  </block>
+
+  <view class="rk-consent">
+    <view class="rk-consent__text">
+      <text class="rk-consent__title">在榜单展示我的昵称和头像</text>
+      <text class="rk-consent__desc">关闭时显示「用户***」与默认头像，可随时修改</text>
+    </view>
+    <switch checked="{{authorized}}" bindchange="onToggleConsent" color="#8A6A46" />
+  </view>
+
+  <button class="btn btn--ghost rk-contact" open-type="contact">问题反馈 / 申诉</button>
+  <text class="rk-foot">分数以云端记录为准 · 榜单不展示手机号与 OpenID</text>
+</view>

@@ -1,0 +1,101 @@
+<view class="page growth">
+  <include src="../../templates/stage-gate.wxml" />
+
+  <block wx:if="{{stageAvailable}}">
+  <view class="gw-head">
+    <text class="eyebrow">GROWTH RECORD</text>
+    <text class="gw-head__title serif">成长记录</text>
+    <text class="gw-head__sub">积分只记录练习行为：通关一关 +10，修正一道错题 +3，完成一轮 +5。</text>
+  </view>
+
+  <view class="score">
+    <view class="score__main">
+      <text class="score__label">当前积分</text>
+      <view class="score__value">
+        <text class="score__num">{{points}}</text>
+        <text class="score__unit">分</text>
+      </view>
+      <text class="score__streak">连续学习 {{streak}} 天 · 累计作答 {{answered}} 道</text>
+    </view>
+    <view class="score__grid">
+      <view class="score__cell">
+        <text class="score__cell-num">{{cleared}}</text>
+        <text class="score__cell-label">已通关 / {{totalLevels}}</text>
+      </view>
+      <view class="score__cell">
+        <text class="score__cell-num">{{corrected}}</text>
+        <text class="score__cell-label">修正的错题</text>
+      </view>
+      <view class="score__cell">
+        <text class="score__cell-num">{{sessions}}</text>
+        <text class="score__cell-label">完成轮次</text>
+      </view>
+      <view class="score__cell">
+        <text class="score__cell-num">{{mistakes}}</text>
+        <text class="score__cell-label">待巩固错题</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip" bindtap="onSuggestion">
+    <view class="tip__body">
+      <text class="tip__label">下一步建议</text>
+      <text class="tip__text">{{suggestion}}</text>
+    </view>
+    <text class="tip__arrow">→</text>
+  </view>
+
+  <view class="section-head">
+    <text class="section-head__title">徽章</text>
+    <text class="section-head__note">{{badges.length}} 枚</text>
+  </view>
+
+  <view class="badges" wx:if="{{badges.length}}">
+    <view class="badge" wx:for="{{badges}}" wx:key="id">
+      <view class="badge__mark">✦</view>
+      <view class="badge__body">
+        <text class="badge__name">{{item.name}}</text>
+        <text class="badge__desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="card badges-empty" wx:else>
+    <text class="muted">还没有徽章。完成第一轮练习，就能拿到「认真练习」。</text>
+  </view>
+
+  <view class="section-head">
+    <text class="section-head__title">六册进度</text>
+    <text class="section-head__note">{{cleared}} / {{totalLevels}} 关</text>
+  </view>
+
+  <view class="stage-list">
+    <view class="stage-row" wx:for="{{stages}}" wx:key="id">
+      <view class="stage-row__top">
+        <text class="stage-row__book">{{item.bookLabel}}</text>
+        <text class="stage-row__name">{{item.name}}</text>
+        <text class="stage-row__count">{{item.cleared}} / {{item.total}}</text>
+      </view>
+      <view class="stage-row__bar">
+        <view class="stage-row__bar-in" style="width:{{item.percent}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="gw-actions">
+    <view class="gw-action" bindtap="onGoRank">
+      <text class="gw-action__text">排行榜</text>
+      <text class="gw-action__meta">积分榜 · 掌握题数榜 · 班级榜</text>
+    </view>
+    <view class="gw-action" bindtap="onAbout">
+      <text class="gw-action__text">关于题库</text>
+      <text class="gw-action__meta">{{questionTotal}} 道题</text>
+    </view>
+    <view class="gw-action gw-action--danger" bindtap="onReset">
+      <text class="gw-action__text">清空本机学习记录</text>
+      <text class="gw-action__meta">只影响这台手机</text>
+    </view>
+  </view>
+
+  <text class="gw-foot">数据保存在这台手机上 · 开通云开发后可加入班级榜</text>
+  </block>
+</view>

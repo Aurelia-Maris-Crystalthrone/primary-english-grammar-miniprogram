@@ -1,0 +1,9 @@
+{
+  "name": "cleanupTestScore",
+  "version": "1.0.0",
+  "description": "一次性清理排行榜联调测试数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

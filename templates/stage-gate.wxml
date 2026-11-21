@@ -1,0 +1,7 @@
+<!-- 未开放学段的统一占位：各页面 <include src="../../templates/stage-gate.wxml" /> 引入 -->
+<view wx:if="{{!stageAvailable}}" class="card stage-gate">
+  <text class="stage-gate__tag">当前学段</text>
+  <text class="stage-gate__title">{{stageLabel}} · 内容建设中</text>
+  <text class="stage-gate__desc">现有题库、语法地图、错题本和成长记录都属于小学阶段。这个学段的内容上线后会自动出现在这里。</text>
+  <button class="btn btn--ghost btn--sm stage-gate__btn" bindtap="onBackToPrimary">回到小学内容</button>
+</view>

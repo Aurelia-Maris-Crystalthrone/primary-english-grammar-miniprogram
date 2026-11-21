@@ -1,0 +1,64 @@
+<view class="page mistakes">
+  <include src="../../templates/stage-gate.wxml" />
+
+  <block wx:if="{{stageAvailable}}">
+  <view class="mk-head">
+    <text class="eyebrow">WRONG BOOK</text>
+    <view class="mk-head__row">
+      <text class="mk-head__title serif">错题本</text>
+      <text class="mk-head__count">{{total}} 道</text>
+    </view>
+    <text class="mk-head__sub">做错的题自动收录，按错误次数分成困难 / 中等 / 简单；做对一次就移出。做不对就先练同一个语法点的同类题。</text>
+  </view>
+
+  <block wx:if="{{total}}">
+    <view class="mk-actions">
+      <button class="btn btn--primary btn--block" bindtap="onRetryAll">{{retryLabel}}</button>
+    </view>
+
+    <view class="mk-group" wx:for="{{groups}}" wx:key="key">
+      <view class="mk-group__head">
+        <view class="row">
+          <text class="pill {{item.cls}}">{{item.label}}</text>
+          <text class="mk-group__count">{{item.count}} 道</text>
+        </view>
+        <text class="mk-group__hint">{{item.hint}}</text>
+      </view>
+
+      <view class="mk-card" wx:for="{{item.items}}" wx:for-item="entry" wx:key="id">
+        <text class="mk-card__prompt">{{entry.prompt}}</text>
+        <text class="mk-card__node" wx:if="{{entry.nodeName}}">{{entry.nodeName}}</text>
+        <view class="mk-card__meta">
+          <text class="mk-card__times">{{entry.countLabel}}</text>
+          <text class="mk-card__level">{{entry.levelName}}</text>
+        </view>
+        <view class="mk-card__answer">
+          <text class="mk-card__answer-label">最近作答</text>
+          <text class="mk-card__answer-value">{{entry.answer}}</text>
+        </view>
+        <view class="mk-card__actions">
+          <view class="mk-card__actions-left">
+            <view class="mk-card__btn" data-id="{{entry.id}}" bindtap="onRetryOne">重做这道</view>
+            <view
+              wx:if="{{entry.similarText}}"
+              class="mk-card__btn mk-card__btn--soft"
+              data-id="{{entry.id}}"
+              data-node="{{entry.nodeId}}"
+              data-level="{{entry.levelId}}"
+              bindtap="onSimilar"
+            >{{entry.similarText}}</view>
+          </view>
+          <view class="mk-card__remove" data-id="{{entry.id}}" bindtap="onRemove">移出</view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <view class="empty" wx:else>
+    <view class="empty__mark">✓</view>
+    <text class="empty__title">错题本是空的</text>
+    <text class="muted">去语法地图挑一关刷题，做错的题会自动收进来。</text>
+    <button class="btn btn--primary btn--sm empty__btn" bindtap="onGoMap">去六册地图</button>
+  </view>
+  </block>
+</view>

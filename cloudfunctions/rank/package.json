@@ -1,0 +1,9 @@
+{
+  "name": "rank",
+  "version": "1.0.0",
+  "description": "积分排行榜：提交战绩 + 拉前十",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

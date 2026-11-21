@@ -1,0 +1,291 @@
+.rank {
+  padding-top: 20rpx;
+}
+
+.rk-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  padding: 8rpx 4rpx 26rpx;
+}
+
+.rk-head__title {
+  font-size: 50rpx;
+  font-weight: 700;
+  letter-spacing: -1rpx;
+}
+
+.rk-head__sub {
+  font-size: 22rpx;
+  color: #9A8F7C;
+  line-height: 1.65;
+}
+
+/* ---------- 我的排名 ---------- */
+.rk-me {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 32rpx;
+  border-radius: 28rpx;
+  background: #2E2A26;
+}
+
+.rk-me__left,
+.rk-me__right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.rk-me__right {
+  align-items: flex-end;
+}
+
+.rk-me__label {
+  font-size: 20rpx;
+  color: #B9B0A2;
+  letter-spacing: 2rpx;
+}
+
+.rk-me__rank {
+  display: flex;
+  align-items: baseline;
+  gap: 6rpx;
+}
+
+.rk-me__no {
+  font-size: 52rpx;
+  line-height: 1;
+  color: #FBF6EC;
+  font-weight: 700;
+}
+
+.rk-me__unit {
+  font-size: 22rpx;
+  color: #B9B0A2;
+}
+
+.rk-me__empty {
+  font-size: 30rpx;
+  color: #FBF6EC;
+  font-weight: 600;
+}
+
+.rk-me__divider {
+  width: 1rpx;
+  height: 62rpx;
+  background: rgba(251, 246, 236, 0.18);
+}
+
+.rk-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 22rpx 4rpx 26rpx;
+}
+
+.rk-meta__time {
+  font-size: 21rpx;
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.rk-meta__hint {
+  font-size: 20rpx;
+  color: #B3AEA4;
+}
+
+/* ---------- 榜单列表 ---------- */
+.rk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14rpx;
+}
+
+.rk-row {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  padding: 22rpx 24rpx;
+  border-radius: 22rpx;
+  background: #FFFFFF;
+  border: 1rpx solid #EFE9DD;
+}
+
+.rk-row--top {
+  border-color: #D9C49A;
+  background: #FFFDF8;
+}
+
+.rk-row--me {
+  border-color: #B9975B;
+  background: #F9F3E6;
+}
+
+.rk-row__no {
+  width: 52rpx;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #A99C88;
+  font-weight: 700;
+}
+
+.rk-row__medal {
+  font-size: 32rpx;
+}
+
+.rk-row__avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  flex: none;
+  background: #F4E9D6;
+}
+
+.rk-row__avatar--emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34rpx;
+}
+
+.rk-row__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.rk-row__name-line {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.rk-row__name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #2E2A26;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rk-row__tag {
+  font-size: 18rpx;
+  color: #8A6A46;
+  background: #F4E9D6;
+  border-radius: 6rpx;
+  padding: 2rpx 8rpx;
+  flex: none;
+}
+
+.rk-row__meta {
+  font-size: 20rpx;
+  color: #A99C88;
+}
+
+.rk-row__score {
+  display: flex;
+  align-items: baseline;
+  gap: 2rpx;
+  flex: none;
+}
+
+.rk-row__points {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #8A6A46;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.rk-row__points-unit {
+  font-size: 18rpx;
+  color: #B3AEA4;
+}
+
+.rk-more {
+  padding: 30rpx 0 10rpx;
+  text-align: center;
+  font-size: 21rpx;
+  color: #B3AEA4;
+}
+
+/* ---------- 空态 / 异常态 ---------- */
+.rk-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14rpx;
+  padding: 48rpx 32rpx;
+}
+
+.rk-state__title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: #2E2A26;
+}
+
+.rk-state__desc {
+  font-size: 23rpx;
+  color: #7A7368;
+  line-height: 1.7;
+}
+
+.rk-state__btn {
+  margin-top: 10rpx;
+  align-self: flex-start;
+}
+
+.rk-consent {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 36rpx;
+  padding: 24rpx 26rpx;
+  border: 1rpx solid #EFE9DD;
+  border-radius: 20rpx;
+  background: #FFFFFF;
+}
+
+.rk-consent__text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+  min-width: 0;
+}
+
+.rk-consent__title {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #2E2A26;
+}
+
+.rk-consent__desc {
+  font-size: 20rpx;
+  color: #9A8F7C;
+  line-height: 1.5;
+}
+
+.rk-contact {
+  margin-top: 24rpx;
+}
+
+.rk-foot {
+  display: block;
+  margin-top: 24rpx;
+  text-align: center;
+  font-size: 20rpx;
+  color: #B3AEA4;
+  line-height: 1.6;
+}

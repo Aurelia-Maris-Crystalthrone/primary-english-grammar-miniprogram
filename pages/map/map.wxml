@@ -1,0 +1,72 @@
+<view class="page map">
+  <include src="../../templates/stage-gate.wxml" />
+
+  <block wx:if="{{stageAvailable}}">
+  <view class="map-head">
+    <text class="eyebrow">GRAMMAR MAP</text>
+    <text class="map-head__title serif">六册课程路线</text>
+    <text class="map-head__sub">已通关 {{totalCleared}} / {{totalLevels}} 关 · 一关一关来，上一关通过（80%）才解锁下一关</text>
+  </view>
+
+  <scroll-view class="stages" scroll-x enable-flex show-scrollbar="{{false}}">
+    <view
+      wx:for="{{stages}}"
+      wx:key="id"
+      class="stage {{item.active ? 'stage--active' : ''}}"
+      data-id="{{item.id}}"
+      bindtap="onSelectStage"
+    >
+      <text class="stage__book">{{item.label}}</text>
+      <text class="stage__name">{{item.name}}</text>
+      <view class="stage__bar">
+        <view class="stage__bar-in" style="width:{{item.percent}}%"></view>
+      </view>
+      <text class="stage__count">{{item.clearedCount}} / {{item.levelCount}}</text>
+    </view>
+  </scroll-view>
+
+  <view class="stage-note" wx:if="{{stage}}">
+    <text class="stage-note__title">{{stage.name}} · 第 {{stage.bookNumber}} 册</text>
+    <text class="stage-note__desc" wx:if="{{stage.guide}}">{{stage.guide}}</text>
+    <text class="stage-note__desc" wx:else>每个关卡先看规则，再刷本关题库；做题不限次数。</text>
+  </view>
+
+  <view class="phase" wx:for="{{phases}}" wx:key="id">
+    <view class="phase__head">
+      <text class="phase__name">{{item.name}}</text>
+      <text class="phase__meta">已通过 {{item.clearedCount}} / {{item.levelCount}} 关</text>
+    </view>
+
+    <view class="grid">
+      <view
+        wx:for="{{item.levels}}"
+        wx:for-item="level"
+        wx:key="id"
+        class="node {{level.cleared ? 'node--cleared' : ''}} {{level.locked ? 'node--locked' : ''}}"
+        data-id="{{level.id}}"
+        bindtap="onOpenLevel"
+      >
+        <view class="node__top">
+          <text class="node__num">{{level.cleared ? '✓' : (level.locked ? '锁' : level.numberLabel)}}</text>
+          <text class="node__tag">{{level.cleared ? '已通过' : (level.locked ? '未解锁' : level.kindLabel)}}</text>
+        </view>
+        <text class="node__name">{{level.name}}</text>
+        <text class="node__meta">{{level.metaLine}}</text>
+      </view>
+
+      <view class="node node--exam" data-id="{{item.id}}" bindtap="onStartExam">
+        <view class="node__top">
+          <text class="node__num">考</text>
+          <text class="node__tag">{{item.exam.tag}}</text>
+        </view>
+        <text class="node__name">{{item.name}}挑战</text>
+        <text class="node__meta">20 题 · 80% 通过 · {{item.exam.count}} 道可抽</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="map-foot">
+    <text class="map-foot__text">题库按「正式归属」区分真题与课程练习，错题会自动进入错题本。</text>
+  </view>
+  </block>
+</view>

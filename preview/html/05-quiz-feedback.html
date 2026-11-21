@@ -1,0 +1,704 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #E9E4DA; display: flex; justify-content: center; padding: 0; }
+.phone {
+  width: 390px; height: 844px; background: #FDFBF7; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.phone__nav {
+  height: 88px; padding-top: 44px; display: flex; align-items: center; justify-content: center;
+  background: #FDFBF7; border-bottom: 1px solid rgba(0,0,0,0.02); position: relative; flex: none;
+}
+.phone__nav-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.phone__nav-back { position: absolute; left: 14px; top: 48px; font-size: 15px; color: #333; }
+.phone__scroll { flex: 1; overflow-y: auto; }
+.phone__tabbar {
+  height: 74px; border-top: 1px solid #F0EBE1; background: #fff; display: flex; flex: none;
+  padding-bottom: 12px;
+}
+.phone__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.phone__tab img { width: 24px; height: 24px; }
+.phone__tab span { font-size: 10px; color: #9A958B; }
+.phone__tab--active span { color: #8A6A46; }
+/* 小学英语语法 · 小程序基础样式
+   配色取自网页版：米白纸感底 + 墨黑正文 + 琥珀金强调。 */
+.page-body {
+  background: #FDFBF7;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 12px 16px 32px;
+}
+
+/* ---------- 排版 ---------- */
+.eyebrow {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #A2967F;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.25px;
+}
+
+.title-sm {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #222222;
+}
+
+.muted {
+  color: #6F6B63;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.tiny {
+  font-size: 11px;
+}
+
+.gold {
+  color: #8A6A46;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--soft {
+  background: #F7F3EA;
+  border-color: #EDE4D3;
+}
+
+.card--flat {
+  box-shadow: 0 1px 0 rgba(34, 34, 34, 0.02);
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 2px 10px;
+}
+
+.section-head__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.section-head__note {
+  font-size: 11px;
+  color: #9A8F7C;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 499.5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn--primary {
+  background: #2E2A26;
+  color: #FFFFFF;
+}
+
+.btn--primary.btn--hover,
+.btn--primary:active {
+  background: #4A3E2C;
+}
+
+.btn--gold {
+  background: #8A6A46;
+  color: #FFFFFF;
+}
+
+.btn--ghost {
+  background: #FFFFFF;
+  color: #2E2A26;
+  border: 0.5px solid #DCD2C0;
+}
+
+.btn--ghost:active {
+  background: #F5F3EE;
+}
+
+.btn--sm {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  background: #E7E2D7;
+  color: #A39C8F;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---------- 标签 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 499.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F6B63;
+  background: #F5F3EE;
+}
+
+.pill--gold {
+  color: #7A5C33;
+  background: #F4E9D6;
+}
+
+.pill--green {
+  color: #37634A;
+  background: #E9F1E7;
+}
+
+.pill--red {
+  color: #9E403C;
+  background: #FBEAE8;
+}
+
+.pill--outline {
+  background: transparent;
+  border: 0.5px solid #E0D7C6;
+}
+
+/* ---------- 进度条 ---------- */
+.progress {
+  height: 6px;
+  border-radius: 499.5px;
+  background: #EFE9DD;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 499.5px;
+  background: #B9975B;
+}
+
+/* ---------- 通用 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stack-8 > view + view {
+  margin-top: 4px;
+}
+
+.divider {
+  height: 0.5px;
+  background: #F0EBE1;
+  margin: 12px 0;
+}
+
+.link {
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9A8F7C;
+}
+
+.empty__title {
+  font-size: 15px;
+  color: #4A443C;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.safe-bottom {
+  height: 0px;
+}
+.quiz {
+  padding-top: 10px;
+}
+
+.quiz-head {
+  padding: 3px 2px 12px;
+}
+
+.quiz-head__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.quiz-head__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222222;
+  flex: 1;
+}
+
+.quiz-head__count {
+  font-size: 12px;
+  color: #8A6A46;
+  font-weight: 700;
+}
+
+.quiz-head__sub {
+  display: block;
+  margin-top: 3px;
+  font-size: 10.5px;
+  color: #9A8F7C;
+}
+
+.quiz-head__bar {
+  margin-top: 9px;
+  height: 5px;
+}
+
+.qa {
+  padding: 16px 15px 15px;
+}
+
+.qa__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.qa__prompt {
+  margin-top: 13px;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #222222;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+  word-break: break-word;
+}
+
+.qa__blank {
+  color: #8A6A46;
+  border-bottom: 1px solid #D9C49A;
+  padding: 0 2px;
+  margin: 0 1px;
+}
+
+.qa__hint {
+  display: block;
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: #A2967F;
+  line-height: 1.6;
+}
+
+.options {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 10px 11px;
+  border-radius: 10px;
+  border: 0.5px solid #E9E2D4;
+  background: #FFFFFF;
+}
+
+.option:active {
+  background: #F9F6EF;
+}
+
+.option__key {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: #F5F1E6;
+  color: #8A6A46;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.option__text {
+  font-size: 15px;
+  color: #2E2A26;
+  line-height: 1.45;
+  font-family: Georgia, "Times New Roman", "Songti SC", serif;
+}
+
+.option--selected {
+  border-color: #2E2A26;
+  background: #FBF7EC;
+}
+
+.option--selected .option__key {
+  background: #2E2A26;
+  color: #FBF6EC;
+}
+
+.option--correct {
+  border-color: #3C6B4F;
+  background: #EDF3EC;
+}
+
+.option--correct .option__key {
+  background: #3C6B4F;
+  color: #FFFFFF;
+}
+
+.option--wrong {
+  border-color: #B84A46;
+  background: #FDF1EF;
+}
+
+.option--wrong .option__key {
+  background: #B84A46;
+  color: #FFFFFF;
+}
+
+.qa__submit {
+  margin-top: 15px;
+}
+
+.feedback {
+  margin-top: 12px;
+  padding: 15px 15px 14px;
+  border-radius: 14px;
+  border: 0.5px solid #EFE9DD;
+  background: #FFFFFF;
+}
+
+.feedback--ok {
+  border-color: #CDE0CE;
+  background: #F4F8F2;
+}
+
+.feedback--bad {
+  border-color: #EFD5D1;
+  background: #FDF6F4;
+}
+
+.feedback__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.feedback__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2E2A26;
+}
+
+.feedback__badge {
+  font-size: 10px;
+  color: #8C8478;
+  padding: 3px 7px;
+  border-radius: 499.5px;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.feedback__answer {
+  margin-top: 10px;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 0.5px dashed #E3D6C2;
+}
+
+.feedback__label {
+  font-size: 10.5px;
+  color: #9A8F7C;
+  flex: none;
+}
+
+.feedback__value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #8A6A46;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.feedback__explain {
+  display: block;
+  margin-top: 9px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4A443C;
+}
+
+.feedback__btn {
+  margin-top: 13px;
+}
+
+/* ---------- 结果 ---------- */
+.result {
+  padding: 20px 18px 18px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.result__score {
+  display: flex;
+  align-items: baseline;
+  margin-top: 8px;
+}
+
+.result__percent {
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1;
+  color: #2E2A26;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.result__unit {
+  font-size: 18px;
+  color: #8A6A46;
+  margin-left: 3px;
+  font-weight: 700;
+}
+
+.result__unit-sm {
+  font-size: 10px;
+  color: #6F6B63;
+}
+
+.result__pill {
+  margin-top: 9px;
+}
+
+.result__headline {
+  margin-top: 11px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #222222;
+  text-align: center;
+}
+
+.result__message {
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: #6F6B63;
+  text-align: center;
+}
+
+.result__stats {
+  width: 100%;
+  margin-top: 15px;
+  padding-top: 13px;
+  border-top: 0.5px solid #F0EBE1;
+  display: flex;
+}
+
+.result__stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.result__stat + .result__stat {
+  border-left: 0.5px solid #F0EBE1;
+}
+
+.result__num {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2E2A26;
+  line-height: 1.2;
+}
+
+.result__label {
+  font-size: 10px;
+  color: #9A8F7C;
+}
+
+.result__btn {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.result__tip {
+  margin-top: 12px;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #B3AEA4;
+  text-align: center;
+}
+
+.empty {
+  margin-top: 60px;
+}
+
+.empty__btn {
+  margin-top: 14px;
+  display: inline-flex;
+}
+</style></head><body><div class="phone"><div class="phone__nav"><div class="phone__nav-back">‹</div><div class="phone__nav-title">随堂练习</div></div><div class="phone__scroll"><div class="page-body"><div class="page quiz">
+  
+
+  
+    <div class="quiz-head">
+      <div class="quiz-head__top">
+        <span class="quiz-head__title">have/ has</span>
+        <span class="quiz-head__count">1 / 10</span>
+      </div>
+      <span class="quiz-head__sub">每轮 10 道 · 首答正确率 80% 通过</span>
+      <div class="progress quiz-head__bar">
+        <div class="progress__bar" style="width:10%"></div>
+      </div>
+    </div>
+
+    <div class="card qa">
+      <div class="qa__meta">
+        <span class="pill pill--red">困难</span>
+        <span class="pill pill--outline">课程练习</span>
+      </div>
+
+      <div class="qa__prompt">
+        
+          
+          <span>Everyone in our class </span>
+        
+          <span class="qa__blank">___</span>
+          
+        
+          
+          <span> (have) a dictionary. We </span>
+        
+          <span class="qa__blank">___</span>
+          
+        
+          
+          <span> (use) them every day.</span>
+        
+      </div>
+      <span class="qa__hint">这道题不止一个空，选项按顺序用 “/” 分开。</span>
+
+      <div class="options">
+        <div class="option option--selected  option--wrong" data-key="A">
+          <span class="option__key">A</span>
+          <span class="option__text">are / have</span>
+        </div><div class="option   " data-key="B">
+          <span class="option__key">B</span>
+          <span class="option__text">is / has</span>
+        </div><div class="option   " data-key="C">
+          <span class="option__key">C</span>
+          <span class="option__text">has / are</span>
+        </div><div class="option   " data-key="D">
+          <span class="option__key">D</span>
+          <span class="option__text">has / use</span>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <div class="feedback feedback--bad">
+      <div class="feedback__head">
+        <span class="feedback__title">差一点，看看解析</span>
+        <span class="feedback__badge">已记入错题本</span>
+      </div>
+      <div class="feedback__answer">
+        <span class="feedback__label">正确答案</span>
+        <span class="feedback__value">has / use</span>
+      </div>
+      <span class="feedback__explain">everyone 看作单数 → has；we 用原形 use。</span>
+      <button class="btn btn--primary btn--block feedback__btn">
+        下一题
+      </button>
+    </div>
+  
+
+  
+</div>
+</div></div></div></body></html>

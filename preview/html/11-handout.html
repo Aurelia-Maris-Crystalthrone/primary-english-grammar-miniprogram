@@ -1,0 +1,408 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><style>
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: #E9E4DA; display: flex; justify-content: center; padding: 0; }
+.phone {
+  width: 390px; height: 844px; background: #FDFBF7; position: relative;
+  display: flex; flex-direction: column; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.phone__nav {
+  height: 88px; padding-top: 44px; display: flex; align-items: center; justify-content: center;
+  background: #FDFBF7; border-bottom: 1px solid rgba(0,0,0,0.02); position: relative; flex: none;
+}
+.phone__nav-title { font-size: 16px; font-weight: 600; color: #1a1a1a; }
+.phone__nav-back { position: absolute; left: 14px; top: 48px; font-size: 15px; color: #333; }
+.phone__scroll { flex: 1; overflow-y: auto; }
+.phone__tabbar {
+  height: 74px; border-top: 1px solid #F0EBE1; background: #fff; display: flex; flex: none;
+  padding-bottom: 12px;
+}
+.phone__tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; }
+.phone__tab img { width: 24px; height: 24px; }
+.phone__tab span { font-size: 10px; color: #9A958B; }
+.phone__tab--active span { color: #8A6A46; }
+/* 小学英语语法 · 小程序基础样式
+   配色取自网页版：米白纸感底 + 墨黑正文 + 琥珀金强调。 */
+.page-body {
+  background: #FDFBF7;
+  color: #222222;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+view, text, scroll-view, button, input {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 12px 16px 32px;
+}
+
+/* ---------- 排版 ---------- */
+.eyebrow {
+  font-size: 10px;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  font-weight: 600;
+  color: #A2967F;
+  text-transform: uppercase;
+}
+
+.serif {
+  font-family: Georgia, "Times New Roman", "Songti SC", "STSong", serif;
+}
+
+.title {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #222222;
+  letter-spacing: -0.25px;
+}
+
+.title-sm {
+  font-size: 17px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: #222222;
+}
+
+.muted {
+  color: #6F6B63;
+}
+
+.small {
+  font-size: 12px;
+}
+
+.tiny {
+  font-size: 11px;
+}
+
+.gold {
+  color: #8A6A46;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.card--soft {
+  background: #F7F3EA;
+  border-color: #EDE4D3;
+}
+
+.card--flat {
+  box-shadow: 0 1px 0 rgba(34, 34, 34, 0.02);
+}
+
+.card + .card {
+  margin-top: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 22px 2px 10px;
+}
+
+.section-head__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222222;
+}
+
+.section-head__note {
+  font-size: 11px;
+  color: #9A8F7C;
+}
+
+/* ---------- 按钮 ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 499.5px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  border: none;
+}
+
+.btn::after {
+  border: none;
+}
+
+.btn--primary {
+  background: #2E2A26;
+  color: #FFFFFF;
+}
+
+.btn--primary.btn--hover,
+.btn--primary:active {
+  background: #4A3E2C;
+}
+
+.btn--gold {
+  background: #8A6A46;
+  color: #FFFFFF;
+}
+
+.btn--ghost {
+  background: #FFFFFF;
+  color: #2E2A26;
+  border: 0.5px solid #DCD2C0;
+}
+
+.btn--ghost:active {
+  background: #F5F3EE;
+}
+
+.btn--sm {
+  height: 34px;
+  padding: 0 14px;
+  font-size: 13px;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  background: #E7E2D7;
+  color: #A39C8F;
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.btn-row .btn {
+  flex: 1;
+}
+
+/* ---------- 标签 ---------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 499.5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F6B63;
+  background: #F5F3EE;
+}
+
+.pill--gold {
+  color: #7A5C33;
+  background: #F4E9D6;
+}
+
+.pill--green {
+  color: #37634A;
+  background: #E9F1E7;
+}
+
+.pill--red {
+  color: #9E403C;
+  background: #FBEAE8;
+}
+
+.pill--outline {
+  background: transparent;
+  border: 0.5px solid #E0D7C6;
+}
+
+/* ---------- 进度条 ---------- */
+.progress {
+  height: 6px;
+  border-radius: 499.5px;
+  background: #EFE9DD;
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  border-radius: 499.5px;
+  background: #B9975B;
+}
+
+/* ---------- 通用 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row--between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.stack-8 > view + view {
+  margin-top: 4px;
+}
+
+.divider {
+  height: 0.5px;
+  background: #F0EBE1;
+  margin: 12px 0;
+}
+
+.link {
+  color: #8A6A46;
+  font-weight: 600;
+}
+
+.empty {
+  padding: 40px 16px;
+  text-align: center;
+  color: #9A8F7C;
+}
+
+.empty__title {
+  font-size: 15px;
+  color: #4A443C;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.safe-bottom {
+  height: 0px;
+}
+.hd {
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.hd-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 2px 11px;
+}
+
+.hd-head__title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.25px;
+}
+
+.hd-head__sub {
+  font-size: 10.5px;
+  color: #9A8F7C;
+}
+
+.hd-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hd-page {
+  width: 100%;
+  border-radius: 9px;
+  background: #FFFFFF;
+  border: 0.5px solid #EFE9DD;
+  overflow: hidden;
+}
+
+.hd-foot {
+  display: block;
+  margin-top: 14px;
+  text-align: center;
+  font-size: 10px;
+  color: #B3AEA4;
+}
+
+.empty {
+  margin-top: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.empty__btn {
+  margin-top: 10px;
+  display: inline-flex;
+}
+
+/* 放大查看：movable-view 自带双指缩放，不依赖 previewImage 对 webp 的支持 */
+.hd-zoom {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(24, 22, 20, 0.94);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hd-zoom__area {
+  width: 100vw;
+  height: 100vh;
+}
+
+.hd-zoom__view {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hd-zoom__img {
+  width: 100vw;
+  height: 100vh;
+}
+
+.hd-zoom__tip {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(251, 246, 236, 0.62);
+  pointer-events: none;
+}
+</style></head><body><div class="phone"><div class="phone__nav"><div class="phone__nav-back">‹</div><div class="phone__nav-title">be 动词三姐妹 · 讲义</div></div><div class="phone__scroll"><div class="page-body"><div class="page hd">
+  <div class="hd-head">
+    <span class="eyebrow">初级上 · HANDOUT</span>
+    <span class="hd-head__title serif">be 动词三姐妹</span>
+    <span class="hd-head__sub">共 3 页 · 点图片放大，双指可再缩放</span>
+  </div>
+
+  <div class="hd-pages">
+    <img class="hd-page" src="file://E:/primary-english-grammar-miniprogram/handouts/b1/pages/sweet-junior-upper-01-1.jpg" data-src="/handouts/b1/pages/sweet-junior-upper-01-1.jpg" data-index="0"></img><img class="hd-page" src="file://E:/primary-english-grammar-miniprogram/handouts/b1/pages/sweet-junior-upper-01-2.jpg" data-src="/handouts/b1/pages/sweet-junior-upper-01-2.jpg" data-index="1"></img><img class="hd-page" src="file://E:/primary-english-grammar-miniprogram/handouts/b1/pages/sweet-junior-upper-01-3.jpg" data-src="/handouts/b1/pages/sweet-junior-upper-01-3.jpg" data-index="2"></img>
+  </div>
+
+  <span class="hd-foot">讲义来自课程原稿，和这一关的知识点一一对应</span>
+
+  
+</div>
+
+
+</div></div></div></body></html>
